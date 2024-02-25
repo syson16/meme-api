@@ -1,0 +1,40 @@
+3.Explain in as much detail as you like how you would scale this API service to ultimately
+support a volume of 10,000 requests per second. Some things to consider include:
+
+a. How will you handle CI/CD in the context of a live service?
+Ultimately CI/CD will be automated by using a service like Terraform to AWS services.
+There will be dev, qa, UAT and prod instances and green and blue copies for UAT and prod.
+Tests will be run for each instance.
+
+dev - tested by software engineers
+qa - tested by sotware engineers and qa engineers
+UAT[green and blue] - tested by clients
+Prod[green and blue] - tested by public users
+
+The green and blue instances are there in the cases of emergencies. 
+
+One example will be on server going down and one has to be swapped for Prod and UAT.
+
+b. How will you model and support SLAs? What should operational SLAs be for this
+service?
+
+The availability design goal should be 99% like any other major servies like AWS. How we achieve the goal should be discuss carefully, thoroughly and continuously.
+
+c. How do you support geographically diverse clients? As you scale the system out
+horizontally, how do you continue to keep track of tokens without slowing down
+the system? 
+
+The system will scale out horizontally to different region and availability zones. Load balancers and caching services(CDN) should be added appropriately. At the system design level, we should also consider adding kafka or redis because it would require high performance to support 100000 requests per second.
+
+
+4. The success of this product has led to the team adding new and exciting features which
+the customers have demanded. Specifically, we are now offering a premium offering:
+Memes AI. With memes AI, you can get even spicier memes curated by generative AI.
+Naturally, this feature costs extra money and requires a separate subscription.
+
+Describe how you would modify the service to now keep track of whether a client is authorized
+to get AI-generated memes. If a client has this subscription, then they should get AI-memes,
+and they should get normal memes otherwise. How do you keep track of authorization of a
+client as we cale the system without slowing down performance?
+
+The user token will be used to verify the subscription the user has. The token will also verify the permissions so that the user will only have access appropriate to the subscription. AI-generated images would require high computing power. Proper design should be discussed.
