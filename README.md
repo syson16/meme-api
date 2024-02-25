@@ -5,6 +5,7 @@ To run the api server in MacOS
 ```console
 python3 -m venv .venv
 . .venv/bin/activate
+pip install Flask pytest
 flask --app main run
 ```
 
